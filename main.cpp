@@ -1,10 +1,10 @@
-#include <avr/io.h>                     //include for base avr funcs
-#define F_CPU 16000000          //define with freq
-#include <util/delay.h>                 //include for delay func
-#include <avr/interrupt.h>      //include interrupt funcs
+#include <avr/io.h>						//include for base avr funcs
+#define F_CPU 16000000       		   	//define with freq
+#include <util/delay.h>					//include for delay func
+#include <avr/interrupt.h>   		   	//include interrupt funcs
 #include <stdlib.h>
 
-#define NUM_OF_ANALOG_PINS 7
+#define NUM_OF_ANALOG_PINS 16
 #define USE_ADC 1
 
 //---------TIMERS----------
