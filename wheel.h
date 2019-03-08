@@ -1,0 +1,33 @@
+#include <stdint.h>
+
+class Wheel
+{
+private:
+	uint8_t type;
+	uint8_t status;
+	uint16_t pinCW;
+	uint16_t pinACW;
+public:
+	//constructors:
+	Wheel();
+	Wheel(uint8_t type);
+
+	//setters:
+	void setStatus(uint8_t newStatus);
+	void setType(uint8_t newType);
+	void setPinCW(uint16_t pinCW);
+	void setPinACW(uint16_t pinACW);
+
+
+	virtual void runCW();//run wheel clockwise
+	virtual void runACW();//run wheel anti-clockwise
+	virtual void stop();//stop wheel
+	virtual void disable();//stop wheel, but powersaving
+
+
+	//getters:
+	uint8_t getStatus();
+	uint8_t getType();
+	uint16_t getPinCW();
+	uint16_t getPinACW();
+};
