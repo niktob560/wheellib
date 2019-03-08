@@ -20,6 +20,9 @@
 //---------CUSTOM_INTERRUPTS----------
 #define USE_CUSTOM_INTERRUPTS 1
 
+//---------FUNC_INPUT_PROTECTOR----------
+#define USE_FUNC_INPUT_PROTECTOR 0
+
 #include "avr-api/api.h"
 
 
