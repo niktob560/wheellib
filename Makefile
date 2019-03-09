@@ -10,6 +10,8 @@ main: avr-api wheel platform
 	avr-objcopy -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0  "$(MAINFILENAME).elf" "$(MAINFILENAME).eep"
 	avr-objcopy -O ihex -R .eeprom  "$(MAINFILENAME).elf" "$(MAINFILENAME).hex"
 
+lib:avr-api wheel platform
+
 wheel: avr-api
 	avr-g++ $(CFLAGS) wheel.cpp
 

@@ -336,6 +336,7 @@ void Platform::runLeft()
 		error = ERROR_BAD_CALL;
 	}
 }
+
 /*
 void Platform::turnLeft()
 {
@@ -359,4 +360,5 @@ void Platform::turnLeft()
 	{
 		error = ERROR_BAD_INIT;
 	}
-}*/
+}
+*/

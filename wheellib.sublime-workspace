@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"TEMPLATE_3",
+				"TEMPLATE_3WH_2ALONG_1PERP"
+			],
+			[
+				"TEMPLATE_",
+				"TEMPLATE_4WH_ALONG_OMNI"
+			],
+			[
+				"TEMPLATE_4WH_",
+				"TEMPLATE_4WH_2ALONG_2PERP"
+			],
+			[
+				"ERROR_",
+				"ERROR_BAD_WHEEL"
+			],
+			[
+				"uint",
+				"uint8_t"
+			],
+			[
 				"usart",
 				"usartInBuf"
 			],
@@ -75,7 +95,7 @@
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 146,
+				"buffer_size": 163,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -84,7 +104,52 @@
 			"file": "conf.h",
 			"settings":
 			{
-				"buffer_size": 295,
+				"buffer_size": 320,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "api.h",
+			"settings":
+			{
+				"buffer_size": 18,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "platform.h",
+			"settings":
+			{
+				"buffer_size": 637,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "platform.cpp",
+			"settings":
+			{
+				"buffer_size": 5445,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "errorCodes.h",
+			"settings":
+			{
+				"buffer_size": 153,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "platformRegs.h",
+			"settings":
+			{
+				"buffer_size": 427,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -102,7 +167,7 @@
 			"file": "wheel.h",
 			"settings":
 			{
-				"buffer_size": 602,
+				"buffer_size": 686,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -111,7 +176,7 @@
 			"file": "wheel.cpp",
 			"settings":
 			{
-				"buffer_size": 1333,
+				"buffer_size": 1468,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -120,7 +185,7 @@
 			"file": "wheelRegs.h",
 			"settings":
 			{
-				"buffer_size": 204,
+				"buffer_size": 349,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -403,7 +468,7 @@
 	],
 	"find":
 	{
-		"height": 40.8773678963
+		"height": 39.8803589232
 	},
 	"find_in_files":
 	{
@@ -417,6 +482,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"ERRORBAD",
 			"scheduleAddFunc",
 			"']')))",
 			"0",
@@ -475,15 +541,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 146,
+						"buffer_size": 163,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16,
-								16
+								33,
+								33
 							]
 						],
 						"settings":
@@ -494,7 +560,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
@@ -503,15 +569,127 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 295,
+						"buffer_size": 320,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								294,
-								294
+								319,
+								319
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "api.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18,
+								18
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "platform.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 637,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								509,
+								509
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "platform.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5445,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5445,
+								5445
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++11/C++11.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "errorCodes.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 153,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								153,
+								153
 							]
 						],
 						"settings":
@@ -526,7 +704,35 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 6,
+					"file": "platformRegs.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 427,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								427,
+								427
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "avr-api-conf.h",
 					"semi_transient": false,
 					"settings":
@@ -550,24 +756,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 8,
 					"file": "wheel.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 602,
+						"buffer_size": 686,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								498,
-								498
+								683,
+								683
 							]
 						],
 						"settings":
@@ -579,52 +785,53 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 9,
 					"file": "wheel.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1333,
+						"buffer_size": 1468,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								518,
-								518
+								172,
+								172
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++11/C++11.tmLanguage"
+							"syntax": "Packages/C++11/C++11.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 179.461615155,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 10,
 					"file": "wheelRegs.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 204,
+						"buffer_size": 349,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								204,
-								204
+								240,
+								240
 							]
 						],
 						"settings":
