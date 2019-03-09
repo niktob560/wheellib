@@ -1,3 +1,5 @@
+#pragma once
+
 #include "wheel.h"
 #include "wheelRegs.h"
 #include "conf.h"
