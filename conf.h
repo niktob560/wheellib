@@ -4,6 +4,9 @@
 #include <avr/interrupt.h>   		   	//include interrupt funcs
 #include <stdlib.h>
 
+
 #include "avr-api-conf.h"
 
 #include "avr-api/api.h"
+
+#include "errorCodes.h"

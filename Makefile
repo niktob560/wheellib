@@ -4,7 +4,7 @@ CFLAGS=-c -g -Os -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunct
 
 all: main
 
-main: avr-api wheel
+main: avr-api wheel platform
 	avr-g++ $(CFLAGS) "$(MAINFILENAME).cpp" -o "$(MAINFILENAME).o"
 	avr-gcc -Wall -Wextra -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=$(MCU)  -o "$(MAINFILENAME).elf" "$(MAINFILENAME).o" -lm
 	avr-objcopy -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0  "$(MAINFILENAME).elf" "$(MAINFILENAME).eep"
@@ -12,6 +12,9 @@ main: avr-api wheel
 
 wheel: avr-api
 	avr-g++ $(CFLAGS) wheel.cpp
+
+platform: avr-api
+	avr-g++ $(CFLAGS) platform.cpp
 
 avr-api:
 	make -C ./avr-api lib

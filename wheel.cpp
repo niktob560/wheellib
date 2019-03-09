@@ -54,6 +54,11 @@ void Wheel::setPinACW(uint16_t pinACW)
 	this->pinACW = pinACW;
 }
 
+void Wheel::setPlacement(uint8_t placement)
+{
+	this->placement = placement;
+}
+
 
 
 uint8_t Wheel::getStatus()
@@ -74,6 +79,11 @@ uint16_t Wheel::getPinCW()
 uint16_t Wheel::getPinACW()
 {
 	return this->pinCW;
+}
+
+uint8_t Wheel::getPlacement()
+{
+	return placement;
 }
 
 
@@ -101,3 +111,4 @@ void Wheel::disable()
 	digitalWrite(this->pinCW, LOW);//disable CW
 	digitalWrite(this->pinACW, LOW);//disable ACW
 }
+

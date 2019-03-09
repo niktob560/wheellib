@@ -1,0 +1,6 @@
+#define ERROR_OK			0
+#define ERROR_BAD_WHEEL		1
+#define ERROR_BAD_ALLOC 	2
+#define ERROR_BAD_STATUS	3
+#define ERROR_BAD_INIT		4
+#define ERROR_BAD_CALL		5
