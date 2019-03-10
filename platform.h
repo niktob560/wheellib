@@ -27,20 +27,20 @@ public:
 
 
 	//getters:
-	//uint8_t getNumOfWheels();
-	//uint8_t getTemplate();
-	//uint8_t getStatus();
-	//uint8_t getError();
+	uint8_t getNumOfWheels();
+	uint8_t getTemplate();
+	uint8_t getStatus();
+	uint8_t getError();
 
 
 	//etc:
 	uint8_t addWheel(Wheel* wh);
-	void runFoward();
+	void runForward();
 	void runBackward();
 	void runRight();
 	void runLeft();
-	//void turnCW();
-	//void turnACW();
+	void turnCW();
+	void turnACW();
 	void stop();
-	//void powerSave();
+	void powerSave();
 };

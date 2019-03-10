@@ -11,6 +11,7 @@ main: avr-api wheel platform
 arch: main avr-api
 	#cp ./avr-api/core.a ./
 	avr-gcc-ar rcs core.a wheel.o 
+	avr-gcc-ar rcs core.a wheelDynSpd.o
 	avr-gcc-ar rcs core.a platform.o 
 
 link: arch
@@ -26,6 +27,7 @@ objcopy: link
 
 wheel: avr-api
 	avr-g++ $(CFLAGS) wheel.cpp -o wheel.o
+	avr-g++ $(CFLAGS) wheelDynSpd.cpp -o wheelDynSpd.o
 
 platform: avr-api
 	avr-g++ $(CFLAGS) platform.cpp -o platform.o

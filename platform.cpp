@@ -129,7 +129,7 @@ void Platform::stop()
 	}
 }
 
-void Platform::runFoward()
+void Platform::runForward()
 {
 	if(wheels != 0)
 	{

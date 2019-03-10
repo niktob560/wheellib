@@ -95,51 +95,16 @@
 			"file": "main.cpp",
 			"settings":
 			{
-				"buffer_size": 315,
+				"buffer_size": 424,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Makefile",
+			"file": "wheelDynSpd.h",
 			"settings":
 			{
-				"buffer_size": 1207,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "avr-api/Makefile",
-			"settings":
-			{
-				"buffer_size": 1827,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "avr-api/digitalRegisters.c",
-			"settings":
-			{
-				"buffer_size": 1150,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "avr-api/digitalRegisters.h",
-			"settings":
-			{
-				"buffer_size": 14911,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "conf.h",
-			"settings":
-			{
-				"buffer_size": 335,
+				"buffer_size": 147,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -148,90 +113,25 @@
 			"file": "api.h",
 			"settings":
 			{
-				"buffer_size": 53,
+				"buffer_size": 78,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "#if defined(ADCL) && USE_ADC == 1\n\t#pragma message \"ADC found\"\n\t#define ADC_DATA_MASK 1023\n\t#define ADC_CHANGED_MASK 1024\n\tuint8_t _analogRef;\n\tvolatile uint16_t _analogPins[NUM_OF_ANALOG_PINS];\n\tvolatile uint8_t _currPin = 0;\n\t\n\t/*\n\t * Function _ADCSetAnalogChanged\n\t * Desc     Set state of \"isNewMeasure\"\n\t * Input    __pin: state of what pin?\n\t * \t\t\t__state: state to set\n\t * Output   none\n\t*/\n\tvoid _ADCSetAnalogChanged(uint8_t __pin, uint8_t __state)\n\t{\n\t\t_analogPins[__pin] = (_analogPins[__pin] & ~ADC_CHANGED_MASK) | (__state * ADC_CHANGED_MASK);\n\t}\n\t\n\t/*\n\t * Function ADCGetAnalogChanged\n\t * Desc     Return state of \"isNewMeasure\"\n\t * Input    __pin: what pin get state\n\t * Output   state\n\t*/\n\tbool ADCGetAnalogChanged(uint8_t __pin)\n\t{\n\t\treturn (_analogPins[__pin] & ADC_CHANGED_MASK) != 0;\n\t}\n\t\n\t\n\t\n\t/*\n\t * Function ADCSendControl\n\t * Desc     Set control signal to ADC\n\t * Input    _contr: control signal\n\t * Output   none\n\t*/\n\tinline void ADCSendControl(uint8_t __contr)\n\t{\n\t\t#if USE_FUNC_INPUT_PROTECTOR == 1\n\t\t\tif(!validateADCControl(__contr))\n\t\t\t{\n\t\t\t\treturn;\n\t\t\t}\n\t\t#endif //if USE_FUNC_INPUT_PROTECTOR == 1\n\t\t\n\t\tADCSRA |= __contr;\n\t}\n\t\n\t/*\n\t * Function ADCSetRef\n\t * Desc     Set analog reference source\n\t * Input    __ref: analog reference source\n\t * Output   none\n\t*/\n\tinline void ADCSetRef(uint8_t __ref)\n\t{\n\t\t#if USE_FUNC_INPUT_PROTECTOR == 1\n\t\t\tif(!validateADCREF(__ref))\n\t\t\t{\n\t\t\t\treturn;\n\t\t\t}\n\t\t#endif //if USE_FUNC_INPUT_PROTECTOR == 1\n\t\t\n\t\tADMUX |= __ref;\n\t\t_analogRef = __ref;\n\t}\n\t\n\t/*\n\t * Function ADCSetPrescaller\n\t * Desc     Set ADC prescaller\n\t * Input    __prescaller: prescaller to set\n\t * Output   none\n\t*/\n\tinline void ADCSetPrescaller(uint8_t __prescaller)\n\t{\n\t\t#if USE_FUNC_INPUT_PROTECTOR == 1\n\t\t\tif(!validateADCPrescaller(__prescaller))\n\t\t\t{\n\t\t\t\treturn;\n\t\t\t}\n\t\t#endif //if USE_FUNC_INPUT_PROTECTOR == 1\n\t\tADCSRA = (ADCSRA & ~ADC_PRESCALLER_MASK) | __prescaller;\n\t}\n\t\n\t/*\n\t * Function ADCSetAnalogAutotriggerSCR\n\t * Desc     Set source for autotrigger\n\t * Input    __src: source\n\t * Output   none\n\t*/\n\tvoid ADCSetAutotriggerSRC(uint8_t __src)\n\t{\n\t\t#if USE_FUNC_INPUT_PROTECTOR == 1\n\t\t\tif(!validateADCAutotriggerSRC(__src))\n\t\t\t{\n\t\t\t\treturn;\n\t\t\t}\n\t\t#endif //if USE_FUNC_INPUT_PROTECTOR == 1\n\t\tADCSRB = (ADCSRB & ~ADC_ADTS_MASK) | __src;\n\t}\n\n\t/*\n\t * Function ADCDisableDigitalInput0to7\n\t * Desc     Disable digital input for pins 0 to 7\n\t * Input    __mask: mask for disabling\n\t * Output   none\n\t*/\n\tinline void ADCDisableDigitalInput0to7(uint8_t __mask)\n\t{\n\t\tDIDR0 = __mask;\n\t}\n\t\n\t/*\n\t * Function ADCDisableDigitalInput8to15\n\t * Desc     Disable digital input for pins 8 to 15\n\t * Input    __mask: mask for disabling\n\t * Output   none\n\t*/\n\tinline void ADCDisableDigitalInput8to15(uint8_t __mask)\n\t{\n\t\tDIDR2 = __mask;\n\t}\n\t\n\t/*\n\t * Function ADCEnable\n\t * Desc     Start ADC\n\t * Input    none\n\t * Output   none\n\t*/\n\tinline void ADCEnable(void)\n\t{\n\t\tADCSendControl(ADC_CONTROL_ENABLE);\n\t}\n\t\n\t/*\n\t * Function ADCDisable\n\t * Desc     Stop ADC\n\t * Input    none\n\t * Output   none\n\t*/\n\tinline void ADCDisable(void)\n\t{\n\t\tADCSRA = (ADCSRA & ~ADC_CONTROL_ENABLE);\n\t}\n\t\n\t/*\n\t * Function ADCStartConvert\n\t * Desc     Start converting\n\t * Input    none\n\t * Output   none\n\t*/\n\tinline void ADCStartConvert(void)\n\t{\n\t\tADCSendControl(ADC_CONTROL_START_CONVERTION);\n\t}\n\t\n\t/*\n\t * Function ADCStopConvert\n\t * Desc     Stop converting\n\t * Input    none\n\t * Output   none\n\t*/\n\tinline void ADCStopConvert(void)\n\t{\n\t\tADCSRA = (ADCSRA & ~ADC_CONTROL_START_CONVERTION);\n\t}\n\t\n\t/*\n\t * Function ADCFlush\n\t * Desc     Clear registers\n\t * Input    none\n\t * Output   none\n\t*/\n\tinline void ADCFlush(void)\n\t{\n\t\tADCSRA = 0;\n\t\tADCSRB = 0;\n\t\tDIDR2  = 0;\n\t\tDIDR0  = 0;\n\t}\n\t\n\t\n\t/*\n\t * Function ADCInit\n\t * Desc     Initialize ADC\n\t * Input    none\n\t * Output   none\n\t*/\n\tvoid ADCInit(void)\n\t{\n\t\tfor(int i = 0; i < NUM_OF_ANALOG_PINS; i++)\n\t\t{\n\t\t\t_analogPins[i] = 0;\n\t\t}\n\t\tADCFlush();\n\t\tADCSetRef(ADC_REF_AVCC);\n\t\tADMUX |= (_currPin & NUM_OF_ANALOG_PINS);\n\t\tADCSetPrescaller(ADC_PRESCALLER_32);\n\t\tADCSendControl(ADC_CONTROL_AUTOTRIGGER);\n\t\tADCSendControl(ADC_CONTROL_INTERRUPT_EN);\n\t\tADCEnable();\n\t\tADCStartConvert();\n\t\t//*/\n\t\t\t\t\t\t//legacy\n\t\t//ADCSRA = 0;\n\t\t//ADCSRB = 0;\n\t\t//ADMUX |= (1 << REFS0); \t//set reference voltage\n\t\t//ADMUX |= (1 << ADLAR); //configure ADC for 8-bit work (PT1)\n\t\t//_analogRef = ADMUX;\t\t\t//save ref\n\t\t//ADMUX |= (_currPin & NUM_OF_ANALOG_PINS);\t\t//set pin for converting\n\t\t//  ADCSRA |= (1 << ADPS2) ;//  set divider - 16\n\t\t//  ADCSRA &= ~ (1 << ADPS1) | (1 << ADPS0);\n\t\t//ADCSRA |= (1 << ADPS2) | (1 << ADPS0);//set divider 32\n\t\t//ADCSRA &= ~ (1 << ADPS1);\n\t\t//ADCSRA |= (1 << ADATE); \t//set autoconvert at trigger\n\t\t//ADCSRA |= (1 << ADIE); \t//ADC interrupt enable\n\t\t//ADCSRA |= (1 << ADEN);\t//enable ADC\n\t\t//ADCSRA |= (1 << ADSC);\t//start conversion*/\n\t\t//ADCStartConvert();\n\t}\n\n\t/*\n\t * Function ISR(ADC_vect)\n\t * Desc     Interrupt handler for vector ADC_vect\n\t * Input    Interrupt vector\n\t * Output   none\n\t*/\n\tISR(ADC_vect)\n\t{\n\t\t_analogPins[_currPin] = ADCL | (ADCH << 8);\n\t\t_ADCSetAnalogChanged(_currPin, 1);\n\t\t_currPin++;\n\t\tif(_currPin >= NUM_OF_ANALOG_PINS)\n\t\t{\n\t\t\t_currPin = 0;\n\t\t}\t\t\n\t\tADMUX = _analogRef | (_currPin & NUM_OF_ANALOG_PINS);\n\t\tcallCustomFunc(INTERRUPT_CUSTOMFUNC_ADC);\n\t}\n\t\n\t\n\t/*\n\t * Function analogRead\n\t * Desc     Return measurment of pin\n\t * Input    __pin: pin for returning measurment\n\t * Output   measurment\n\t*/\n\tint analogRead(uint8_t __pin)\n\t{\n\t\t_ADCSetAnalogChanged(__pin, 0);\n\t\treturn _analogPins[__pin] & ADC_DATA_MASK;\n\t}\n#endif //if defined(ADCL) && USE_ADC == 1\n",
-			"file": "avr-api/ADC.c",
-			"file_size": 5569,
-			"file_write_time": 131966490704937369,
+			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 5527,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "platform.h",
-			"settings":
-			{
-				"buffer_size": 691,
+				"buffer_size": 1296,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "platform.cpp",
+			"file": "wheelDynSpd.cpp",
 			"settings":
 			{
-				"buffer_size": 5694,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "errorCodes.h",
-			"settings":
-			{
-				"buffer_size": 153,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "platformRegs.h",
-			"settings":
-			{
-				"buffer_size": 427,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "avr-api-conf.h",
-			"settings":
-			{
-				"buffer_size": 402,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "wheel.h",
-			"settings":
-			{
-				"buffer_size": 700,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "wheel.cpp",
-			"settings":
-			{
-				"buffer_size": 1770,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "wheelRegs.h",
-			"settings":
-			{
-				"buffer_size": 349,
+				"buffer_size": 157,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -454,11 +354,25 @@
 	],
 	"file_history":
 	[
-		"/home/nikto_b/Documents/tests/Makefile",
-		"/home/nikto_b/Documents/C++/wheellib/avr-api/Makefile",
-		"/home/nikto_b/Documents/C++/avr-api/Makefile",
-		"/home/nikto_b/Documents/C++/wheellib/Makefile",
+		"/home/nikto_b/Documents/C++/avr-api/main.cpp",
 		"/home/nikto_b/Documents/C++/wheellib/api.h",
+		"/home/nikto_b/Documents/C++/wheellib/main.cpp",
+		"/home/nikto_b/Documents/C++/wheellib/Makefile",
+		"/home/nikto_b/Documents/C++/wheellib/wheel.cpp",
+		"/home/nikto_b/Documents/C++/wheellib/wheel.h",
+		"/home/nikto_b/Documents/C++/wheellib/platform.h",
+		"/home/nikto_b/Documents/C++/wheellib/platform.cpp",
+		"/home/nikto_b/Documents/C++/wheellib/wheelRegs.h",
+		"/home/nikto_b/Documents/C++/wheellib/avr-api-conf.h",
+		"/home/nikto_b/Documents/C++/wheellib/platformRegs.h",
+		"/home/nikto_b/Documents/C++/wheellib/errorCodes.h",
+		"/home/nikto_b/Documents/C++/wheellib/avr-api/ADC.c",
+		"/home/nikto_b/Documents/C++/wheellib/conf.h",
+		"/home/nikto_b/Documents/C++/wheellib/avr-api/digitalRegisters.h",
+		"/home/nikto_b/Documents/C++/wheellib/avr-api/digitalRegisters.c",
+		"/home/nikto_b/Documents/C++/wheellib/avr-api/Makefile",
+		"/home/nikto_b/Documents/tests/Makefile",
+		"/home/nikto_b/Documents/C++/avr-api/Makefile",
 		"/home/nikto_b/Documents/C++/avr-api/stringFuncs.h",
 		"/home/nikto_b/Documents/C++/avr-api/stringFuncs.c",
 		"/home/nikto_b/Documents/C++/avr-api/customFuncAddr.h",
@@ -468,7 +382,6 @@
 		"/home/nikto_b/Documents/C++/avr-api/USART.h",
 		"/home/nikto_b/Documents/C++/avr-api/USART.c",
 		"/home/nikto_b/Documents/C++/avr-api/Timers.c",
-		"/home/nikto_b/Documents/C++/avr-api/main.cpp",
 		"/home/nikto_b/Documents/C++/avr-api/avr-api.sublime-project",
 		"/home/nikto_b/C++/avr-api/main.cpp",
 		"/home/nikto_b/.config/sublime-text-3/Packages/User/intellitip.sublime-settings",
@@ -519,7 +432,7 @@
 	],
 	"find":
 	{
-		"height": 39.8953140578
+		"height": 39.8803589232
 	},
 	"find_in_files":
 	{
@@ -533,6 +446,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"$(MAINFILENAME)",
 			"lm",
 			"ERRORBAD",
 			"scheduleAddFunc",
@@ -572,6 +486,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"main",
 			"n",
 			"B"
 		],
@@ -593,15 +508,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 315,
+						"buffer_size": 424,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								35,
-								35
+								187,
+								187
 							]
 						],
 						"settings":
@@ -618,19 +533,75 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Makefile",
+					"file": "wheelDynSpd.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1207,
+						"buffer_size": 147,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3,
-								3
+								17,
+								17
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "api.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 78,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								77,
+								77
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1296,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11,
+								11
 							]
 						],
 						"settings":
@@ -646,403 +617,31 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "avr-api/Makefile",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1827,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Makefile/Makefile.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 89.7308075773,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "avr-api/digitalRegisters.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1150,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
 					"buffer": 4,
-					"file": "avr-api/digitalRegisters.h",
+					"file": "wheelDynSpd.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14911,
+						"buffer_size": 157,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								23,
+								23
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "conf.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 335,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								309,
-								309
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "api.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 53,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								53,
-								53
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax"
+							"syntax": "Packages/C++11/C++11.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "avr-api/ADC.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5527,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4955,
-								4955
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2849.45164506,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "platform.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 691,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								247,
-								247
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "platform.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5694,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								337,
-								337
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "errorCodes.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 153,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								153,
-								153
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "platformRegs.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 427,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								137,
-								137
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "avr-api-conf.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 402,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								167,
-								167
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 271.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "wheel.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 700,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								389,
-								389
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "wheel.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1770,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								977,
-								977
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 809.571286142,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "wheelRegs.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 349,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								240,
-								240
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
 					"type": "text"
 				}
 			]
@@ -1099,7 +698,7 @@
 	"project": "wheellib.sublime-project",
 	"replace":
 	{
-		"height": 72.7966101695
+		"height": 70.7876370887
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1123,7 +722,7 @@
 		[
 			[
 				"",
-				"~/Documents/C++/avr-api/avr-api.sublime-project"
+				"~/Documents/C++/botFuck/botFuck.sublime-project"
 			],
 			[
 				"avr",
