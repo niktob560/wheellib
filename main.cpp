@@ -1,17 +1,21 @@
 #include "conf.h"
 #include "api.h"
 
+#include "avr-api/api.h"
+
+
 Platform * pl;
+Wheel * wh;
 
 int main()
 {
-	pl = (Platform*)malloc(sizeof(Platform));
+	pl = new Platform(TEMPLATE_4WH_2ALONG_2PERP);
+	pl->addWheel(new Wheel());
 	USART0Begin(115200);
 	sei();
 	while(1)
 	{
 		USART0Println("AAA");
-		USART0Send('\r');
 		_delay_ms(100);
 	}
 	return 0;

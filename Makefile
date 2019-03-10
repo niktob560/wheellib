@@ -1,6 +1,6 @@
 MAINFILENAME=main
 MCU=atmega2560
-CFLAGS=-c -O1 -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -flto -fno-devirtualize -fno-use-cxa-atexit -mmcu=$(MCU) -DF_CPU=$(XTAL) 
+CFLAGS=-c -O1 -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -flto -fno-devirtualize -fno-use-cxa-atexit -mmcu=$(MCU) -DF_CPU=$(XTAL) -lstdc++ 
 
 
 all: objcopy
@@ -8,10 +8,14 @@ all: objcopy
 main: avr-api wheel platform
 	avr-g++ $(CFLAGS) "$(MAINFILENAME).cpp" -o "$(MAINFILENAME).o"
 
-link: main
-	avr-gcc -Wall -Wextra -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu=$(MCU) "$(MAINFILENAME).o" -o "$(MAINFILENAME).elf" -lm
+arch: main
+	avr-gcc-ar rcs core.a wheel.o 
+	avr-gcc-ar rcs core.a platform.o 
 
-objcopy: link
+link: arch
+	avr-gcc -Wall -Wextra -Os -g -flto -fuse-linker-plugin -ffunction-sections -fdata-sections -Wl,--gc-sections -mmcu=$(MCU) main.o core.a ./avr-api/core.a -o main.elf -L./avr-api -lm
+
+objcopy: arch
 	avr-objcopy -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0  "$(MAINFILENAME).elf" "$(MAINFILENAME).eep"
 	avr-objcopy -O ihex -R .eeprom  "$(MAINFILENAME).elf" "$(MAINFILENAME).hex"
 

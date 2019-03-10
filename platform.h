@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include "wheel.h"
+#include "platformRegs.h"
 
 
 class Platform
@@ -26,10 +27,10 @@ public:
 
 
 	//getters:
-	uint8_t getNumOfWheels();
-	uint8_t getTemplate();
-	uint8_t getStatus();
-	uint8_t getError();
+	//uint8_t getNumOfWheels();
+	//uint8_t getTemplate();
+	//uint8_t getStatus();
+	//uint8_t getError();
 
 
 	//etc:
@@ -38,8 +39,8 @@ public:
 	void runBackward();
 	void runRight();
 	void runLeft();
-	void turnCW();
-	void turnACW();
+	//void turnCW();
+	//void turnACW();
 	void stop();
-	void powerSave();
+	//void powerSave();
 };
