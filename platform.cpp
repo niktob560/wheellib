@@ -8,6 +8,7 @@
 #include <avr/interrupt.h>   		   	//include interrupt funcs
 #include <stdlib.h>
 #include "errorCodes.h"
+#include "avr-api/USART.h"
 
 Platform::Platform(uint8_t templ)
 {
@@ -16,6 +17,10 @@ Platform::Platform(uint8_t templ)
 
 void Platform::setNumOfWheels(uint8_t num)
 {
+	this->numOfWheels = num;
+	if(wheels != 0)
+		free(wheels);
+	wheels = (Wheel**)malloc(sizeof(Wheel*) * num);
 	if(num > 0)
 	{
 		if(wheels == 0)
@@ -133,16 +138,21 @@ void Platform::runForward()
 {
 	if(wheels != 0)
 	{
+							//USART0Println("A");
 		if(templ != TEMPLATE_CUSTOM && templ != TEMPLATE_3WH_120DEG)
 		{
+							//USART0Println("A");
 			for(uint8_t i = 0; i < numOfWheels; i++)
 			{
+							//USART0Println("A");
 				switch(templ)
 				{
 					case TEMPLATE_4WH_2ALONG_2PERP:
 					{
+						//USART0Println("A");
 						if(wheels[i] != 0)
 						{
+							//USART0Println("A");
 							if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
 							{
 								wheels[i]->runCW();
@@ -243,13 +253,17 @@ void Platform::runRight()
 				{
 					for(uint8_t i = 0; i < numOfWheels; i++)
 					{
+						//USART0Print("WHEEL ");
+						//USART0Println(i);
 						if(wheels[i] != 0)
 						{
+							//USART0Print("PLACEMENT: ");
+							//USART0Println(wheels[i]->getPlacement());
 							if(wheels[i]->getPlacement() == PLACEMENT_SIDE_PERP_FRONT)
 							{
 								wheels[i]->runACW();
 							}
-							else if(wheels[i] == PLACEMENT_SIDE_PERP_BACK)
+							else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_PERP_BACK)
 							{
 								wheels[i]->runCW();
 							}
@@ -305,11 +319,11 @@ void Platform::runLeft()
 						{
 							if(wheels[i]->getPlacement() == PLACEMENT_SIDE_PERP_FRONT)
 							{
-								wheels[i]->runACW();
-							}
-							else if(wheels[i] == PLACEMENT_SIDE_PERP_BACK)
-							{
 								wheels[i]->runCW();
+							}
+							else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_PERP_BACK)
+							{
+								wheels[i]->runACW();
 							}
 							else
 							{
@@ -368,3 +382,61 @@ void Platform::turnLeft()
 	}
 }
 */
+
+Wheel* Platform::getWheel(uint8_t _i)
+{
+	return wheels[_i];
+}
+
+uint16_t Platform::getError()
+{
+	return error;
+}
+
+
+void Platform::turnCW()
+{
+	if(wheels != 0)
+	{
+		for(uint8_t i = 0; i < numOfWheels; i++)
+		{
+			if(wheels[i] != 0)
+			{
+				wheels[i]->runACW();
+			}
+			else
+			{
+				error = ERROR_BAD_WHEEL;
+				this->stop();
+				return();
+			}
+		}
+	}
+	else
+	{
+		error = ERROR_BAD_INIT;
+	}
+}
+void Platform::turnACW()
+{
+	if(wheels != 0)
+	{
+		for(uint8_t i = 0; i < numOfWheels; i++)
+		{
+			if(wheels[i] != 0)
+			{
+				wheels[i]->runCW();
+			}
+			else
+			{
+				error = ERROR_BAD_WHEEL;
+				this->stop();
+				return();
+			}
+		}
+	}
+	else
+	{
+		error = ERROR_BAD_INIT;
+	}
+}

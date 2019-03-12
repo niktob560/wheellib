@@ -30,7 +30,8 @@ public:
 	uint8_t getNumOfWheels();
 	uint8_t getTemplate();
 	uint8_t getStatus();
-	uint8_t getError();
+	uint16_t getError();
+	Wheel* getWheel(uint8_t _i);
 
 
 	//etc:

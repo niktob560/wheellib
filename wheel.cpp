@@ -11,6 +11,7 @@
 #include "errorCodes.h"
 
 #include "avr-api/digitalRegisters.h"
+#include "avr-api/USART.h"
 
 
 Wheel::Wheel(){}
@@ -100,24 +101,31 @@ uint8_t Wheel::getPlacement()
 
 void Wheel::runCW()
 {
+	USART0Println("CW");
+	this->status = STATUS_CW;
 	digitalWrite(this->pinCW, HIGH);//enable CW
 	digitalWrite(this->pinACW, LOW);//disable ACW
 }
 
 void Wheel::runACW()
 {
+	USART0Println("ACW");
+	this->status = STATUS_ACW;
 	digitalWrite(this->pinCW, LOW);//disable CW
 	digitalWrite(this->pinACW, HIGH);//enable CW
 }
 
 void Wheel::stop()
 {
+	USART0Println("STOP");
+	this->status = STATUS_STOP;
 	digitalWrite(this->pinCW, HIGH);//enable CW
 	digitalWrite(this->pinACW, HIGH);//enable CW	
 }
 
 void Wheel::disable()
 {
+	this->status = STATUS_DISABLE;
 	digitalWrite(this->pinCW, LOW);//disable CW
 	digitalWrite(this->pinACW, LOW);//disable ACW
 }
