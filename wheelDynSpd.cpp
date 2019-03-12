@@ -17,7 +17,7 @@ void WheelDynamicSpeed::runCW()
 }
 
 
-void WheelDynamicSpeed::runCW()
+void WheelDynamicSpeed::runACW()
 {
 	analogWrite(pinACW, spd);
 	analogWrite(pinCW, 0);

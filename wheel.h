@@ -4,7 +4,7 @@
 
 class Wheel
 {
-private:
+protected:
 	uint8_t type;
 	uint8_t status;
 	uint16_t pinCW;
