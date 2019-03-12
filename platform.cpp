@@ -408,7 +408,7 @@ void Platform::turnCW()
 			{
 				error = ERROR_BAD_WHEEL;
 				this->stop();
-				return();
+				return;
 			}
 		}
 	}
@@ -431,7 +431,7 @@ void Platform::turnACW()
 			{
 				error = ERROR_BAD_WHEEL;
 				this->stop();
-				return();
+				return;
 			}
 		}
 	}
