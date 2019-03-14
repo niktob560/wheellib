@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "errorCodes.h"
 #include "avr-api/USART.h"
+#include <math.h>
 
 Platform::Platform(uint8_t templ)
 {
@@ -120,7 +121,7 @@ void Platform::stop()
 			if(wheels[i] != 0)
 			{
 				wheels[i]->stop();
-				error = ERROR_OK;
+				//error = ERROR_OK;
 			}
 			else
 			{
@@ -357,31 +358,6 @@ void Platform::runLeft()
 	}
 }
 
-/*
-void Platform::turnLeft()
-{
-	if(wheels != 0)
-	{
-		for(uint8_t i = 0; i < numOfWheels; i++)
-		{
-			if(wheels[i] != 0)
-			{
-
-			}
-			else
-			{
-				error = ERROR_BAD_WHEEL;
-				this->stop();
-				return;
-			}
-		}
-	}
-	else
-	{
-		error = ERROR_BAD_INIT;
-	}
-}
-*/
 
 Wheel* Platform::getWheel(uint8_t _i)
 {
@@ -417,6 +393,7 @@ void Platform::turnCW()
 		error = ERROR_BAD_INIT;
 	}
 }
+
 void Platform::turnACW()
 {
 	if(wheels != 0)
@@ -438,5 +415,253 @@ void Platform::turnACW()
 	else
 	{
 		error = ERROR_BAD_INIT;
+	}
+}
+
+void Platform::runFwdRight()
+{
+	if(wheels == 0)
+	{
+		error = ERROR_BAD_ALLOC;
+		return;
+	}
+	for(uint8_t i = 0; i < numOfWheels; i++)
+	{
+		if(wheels[i] == 0)
+		{
+			error = ERROR_BAD_WHEEL;
+			this->stop();
+			return;
+		}
+		switch(wheels[i]->getPlacement())
+		{
+			case PLACEMENT_SIDE_PERP_BACK:
+			{
+				wheels[i]->runCW();
+				break;
+			}
+			case PLACEMENT_SIDE_PERP_FRONT:
+			{
+				wheels[i]->runACW();
+				break;
+			}
+			case PLACEMENT_SIDE_ALONG_LEFT:
+			{
+				wheels[i]->runACW();
+			}
+			case PLACEMENT_SIDE_ALONG_RIGHT:
+			{
+				wheels[i]->runCW();
+			}
+			default:
+				wheels[i]->stop();
+		}
+	}
+}
+
+void Platform::runFwdLeft()
+{
+	if(wheels == 0)
+	{
+		error = ERROR_BAD_ALLOC;
+		return;
+	}
+	for(uint8_t i = 0; i < numOfWheels; i++)
+	{
+		if(wheels[i] == 0)
+		{
+			error = ERROR_BAD_WHEEL;
+			this->stop();
+			return;
+		}
+		switch(wheels[i]->getPlacement())
+		{
+			case PLACEMENT_SIDE_PERP_BACK:
+			{
+				wheels[i]->runACW();
+				break;
+			}
+			case PLACEMENT_SIDE_PERP_FRONT:
+			{
+				wheels[i]->runCW();
+				break;
+			}
+			case PLACEMENT_SIDE_ALONG_LEFT:
+			{
+				wheels[i]->runACW();
+			}
+			case PLACEMENT_SIDE_ALONG_RIGHT:
+			{
+				wheels[i]->runCW();
+			}
+			default:
+				wheels[i]->stop();
+		}
+	}
+}
+
+void Platform::runBckRight()
+{
+	if(wheels == 0)
+	{
+		error = ERROR_BAD_ALLOC;
+		return;
+	}
+	for(uint8_t i = 0; i < numOfWheels; i++)
+	{
+		if(wheels[i] == 0)
+		{
+			error = ERROR_BAD_WHEEL;
+			this->stop();
+			return;
+		}
+		switch(wheels[i]->getPlacement())
+		{
+			case PLACEMENT_SIDE_PERP_BACK:
+			{
+				wheels[i]->runACW();
+				break;
+			}
+			case PLACEMENT_SIDE_PERP_FRONT:
+			{
+				wheels[i]->runCW();
+				break;
+			}
+			case PLACEMENT_SIDE_ALONG_LEFT:
+			{
+				wheels[i]->runCW();
+			}
+			case PLACEMENT_SIDE_ALONG_RIGHT:
+			{
+				wheels[i]->runACW();
+			}
+			default:
+				wheels[i]->stop();
+		}
+	}
+}
+
+void Platform::runBckLeft()
+{
+	if(wheels == 0)
+	{
+		error = ERROR_BAD_ALLOC;
+		return;
+	}
+	for(uint8_t i = 0; i < numOfWheels; i++)
+	{
+		if(wheels[i] == 0)
+		{
+			error = ERROR_BAD_WHEEL;
+			this->stop();
+			return;
+		}
+		switch(wheels[i]->getPlacement())
+		{
+			case PLACEMENT_SIDE_PERP_BACK:
+			{
+				wheels[i]->runCW();
+				break;
+			}
+			case PLACEMENT_SIDE_PERP_FRONT:
+			{
+				wheels[i]->runACW();
+				break;
+			}
+			case PLACEMENT_SIDE_ALONG_LEFT:
+			{
+				wheels[i]->runCW();
+			}
+			case PLACEMENT_SIDE_ALONG_RIGHT:
+			{
+				wheels[i]->runACW();
+			}
+			default:
+				wheels[i]->stop();
+		}
+	}
+}
+
+
+//         B
+//        /|
+//       / |
+//      /  |
+//     A---+C
+//sinA = BC/AB 		cosA=AC/AB 		tgA=BC/AC 		ctgA=AC/BC
+//BC=ABsinA			AC=ABcosA 		BC=ACtgA	 	AC=BCctgA
+void Platform::strafe(int16_t angle)
+{
+	if(wheels == 0)
+	{
+		error = ERROR_BAD_INIT;
+		return;
+	}
+	angle %= 360;
+	uint16_t vertSpd, horSpd;
+	if(abs(angle % 90) < 45)
+	{
+		horSpd  = spd;
+		vertSpd = spd * tan(angle);
+	}
+	else if(abs(angle % 90) > 45)
+	{
+		vertSpd = spd;
+		horSpd  = spd * tan(angle);
+	}
+	else
+	{
+		vertSpd = spd;
+		horSpd  = spd;
+	}
+	for(uint8_t i = 0; i < numOfWheels; i++)
+	{
+		if(wheels[i] == 0)
+		{
+			error = ERROR_BAD_WHEEL;
+			this->stop();
+			return;
+		}
+		switch(wheels[i]->getPlacement())
+		{
+			case PLACEMENT_SIDE_ALONG_RIGHT:
+			{
+				wheels[i]->setSpeed(vertSpd);
+				if(angle > 0)
+					wheels[i]->runCW();
+				else
+					wheels[i]->runACW();
+				break;
+			}
+			case PLACEMENT_SIDE_ALONG_LEFT:
+			{
+				wheels[i]->setSpeed(vertSpd);
+				if(angle > 0)
+					wheels[i]->runACW();
+				else
+					wheels[i]->runCW();
+				break;
+			}
+			case PLACEMENT_SIDE_PERP_FRONT:
+			{
+				wheels[i]->setSpeed(horSpd);
+				if(angle > 90
+				|| angle < -90)
+					wheels[i]->runCW();
+				else
+					wheels[i]->runACW();
+				break;
+			}
+			case PLACEMENT_SIDE_PERP_BACK:
+			{
+				wheels[i]->setSpeed(horSpd);
+				if(angle > 90
+				|| angle < -90)
+					wheels[i]->runACW();
+				else
+					wheels[i]->runCW();
+				break;
+			}
+		}
 	}
 }

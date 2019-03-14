@@ -35,6 +35,7 @@ platform: avr-api
 
 
 avr-api:
+	make -C ./avr-api clean
 	make -C ./avr-api lib
 
 

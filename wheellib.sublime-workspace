@@ -91,23 +91,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "platform.cpp",
-			"settings":
-			{
-				"buffer_size": 6818,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "platform.h",
-			"settings":
-			{
-				"buffer_size": 709,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "Packages/Java/JavaC.sublime-build",
 	"build_system_choices":
@@ -137,15 +120,15 @@
 		"selected_items":
 		[
 			[
+				"toggle",
+				"View: Toggle Menu"
+			],
+			[
 				"toggle ",
 				"View: Toggle Menu"
 			],
 			[
 				"toggle me",
-				"View: Toggle Menu"
-			],
-			[
-				"toggle",
 				"View: Toggle Menu"
 			],
 			[
@@ -326,6 +309,8 @@
 	],
 	"file_history":
 	[
+		"/home/nikto_b/Documents/C++/wheellib/platform.h",
+		"/home/nikto_b/Documents/C++/wheellib/platform.cpp",
 		"/home/nikto_b/Documents/C++/wheellib/main.cpp",
 		"/home/nikto_b/Documents/C++/wheellib/wheelDynSpd.h",
 		"/home/nikto_b/Documents/C++/wheellib/wheel.h",
@@ -334,8 +319,6 @@
 		"/home/nikto_b/Documents/C++/wheellib/Makefile",
 		"/home/nikto_b/Documents/C++/avr-api/main.cpp",
 		"/home/nikto_b/Documents/C++/wheellib/wheel.cpp",
-		"/home/nikto_b/Documents/C++/wheellib/platform.h",
-		"/home/nikto_b/Documents/C++/wheellib/platform.cpp",
 		"/home/nikto_b/Documents/C++/wheellib/wheelRegs.h",
 		"/home/nikto_b/Documents/C++/wheellib/avr-api-conf.h",
 		"/home/nikto_b/Documents/C++/wheellib/platformRegs.h",
@@ -406,7 +389,7 @@
 	],
 	"find":
 	{
-		"height": 39.8953140578
+		"height": 39.8803589232
 	},
 	"find_in_files":
 	{
@@ -473,67 +456,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "platform.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6818,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6563,
-								6563
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++11/C++11.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5638.08574277,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "platform.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 709,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								150,
-								150
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -567,7 +491,7 @@
 			1.0
 		]
 	},
-	"menu_visible": true,
+	"menu_visible": false,
 	"output.SublimeLinter":
 	{
 		"height": 0.0
@@ -612,7 +536,7 @@
 		[
 			[
 				"",
-				"~/Documents/C++/botFuck/botFuck.sublime-project"
+				"~/Documents/C++/glWindow/glWindow.sublime-project"
 			],
 			[
 				"avr",

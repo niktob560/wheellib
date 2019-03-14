@@ -130,3 +130,4 @@ void Wheel::disable()
 	digitalWrite(this->pinACW, LOW);//disable ACW
 }
 
+void Wheel::setSpeed(uint16_t spd){}//do nothing

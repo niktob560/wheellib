@@ -14,6 +14,7 @@ private:
 	uint8_t templ;
 	uint8_t status;
 	uint16_t error;
+	uint16_t spd = 0;
 
 public:
 	//constructors:
@@ -24,6 +25,7 @@ public:
 	void setNumOfWheels(uint8_t num);
 	void setTemplate(uint8_t t);
 	void setStatus(uint8_t status);
+	void setSpeed(uint16_t spd);
 
 
 	//getters:
@@ -31,6 +33,7 @@ public:
 	uint8_t getTemplate();
 	uint8_t getStatus();
 	uint16_t getError();
+	uint16_t getSpeed();
 	Wheel* getWheel(uint8_t _i);
 
 
@@ -42,6 +45,11 @@ public:
 	void runLeft();
 	void turnCW();
 	void turnACW();
+	void runFwdRight();//run forward and right
+	void runFwdLeft();//run forward and left
+	void runBckRight();//run backward and right
+	void runBckLeft();//run backward and left
+	void strafe(int16_t angle);
 	void stop();
 	void powerSave();
 };

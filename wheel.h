@@ -21,6 +21,7 @@ public:
 	void setPinCW(uint16_t pinCW);
 	void setPinACW(uint16_t pinACW);
 	void setPlacement(uint8_t placement);
+	virtual void setSpeed(uint16_t spd);
 
 
 	virtual void runCW();//run wheel clockwise
