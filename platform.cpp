@@ -81,7 +81,7 @@ void Platform::setTemplate(uint8_t templ)
 			this->error = ERROR_BAD_WHEEL;
 			break;
 		}
-	}	
+	}
 }
 
 void Platform::setStatus(uint8_t status)
@@ -145,33 +145,40 @@ void Platform::runForward()
 							//USART0Println("A");
 			for(uint8_t i = 0; i < numOfWheels; i++)
 			{
+				if(wheels[i] == 0)
+				{
+					error = ERROR_BAD_WHEEL;
+					this->stop();
+					return;
+				}
 							//USART0Println("A");
 				switch(templ)
 				{
 					case TEMPLATE_4WH_2ALONG_2PERP:
 					{
-						//USART0Println("A");
-						if(wheels[i] != 0)
+						if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
 						{
-							//USART0Println("A");
-							if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
-							{
-								wheels[i]->runCW();
-							}
-							else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_LEFT)
-							{
-								wheels[i]->runACW();
-							}
-							else
-							{
-								wheels[i]->stop();
-							}
+							wheels[i]->runCW();
+						}
+						else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_LEFT)
+						{
+							wheels[i]->runACW();
 						}
 						else
 						{
-							error = ERROR_BAD_WHEEL;
-							this->stop();
-							return;
+							wheels[i]->stop();
+						}
+						break;
+					}
+					case TEMPLATE_2WH_ALONG:
+					{
+						if(heels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
+						{
+							wheels[i]->runCW();
+						}
+						else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_LEFT)
+						{
+							wheels[i]->runACW();
 						}
 						break;
 					}
@@ -197,32 +204,40 @@ void Platform::runBackward()
 		{
 			for(uint8_t i = 0; i < numOfWheels; i++)
 			{
+				if(wheels[i] == 0)
+				{
+					error = ERROR_BAD_WHEEL;
+					this->stop();
+					return;
+				}
 				switch(templ)
 				{
 					case TEMPLATE_4WH_2ALONG_2PERP:
 					{
-						if(wheels[i] != 0)
+						if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
 						{
-							if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
-							{
-								wheels[i]->runACW();
-							}
-							else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_LEFT)
-							{
-								wheels[i]->runCW();
-							}
-							else
-							{
-								wheels[i]->stop();
-							}
+							wheels[i]->runACW();
+						}
+						else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_LEFT)
+						{
+							wheels[i]->runCW();
 						}
 						else
 						{
-							error = ERROR_BAD_WHEEL;
-							this->stop();
-							return;
+							wheels[i]->stop();
 						}
 						break;
+					}
+					case TEMPLATE_2WH_ALONG:
+					{
+						if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
+						{
+							wheels[i]->runACW();
+						}
+						else if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_LEFT)
+						{
+							wheels[i]->runCW();
+						}
 					}
 				}
 			}
@@ -585,9 +600,9 @@ void Platform::runBckLeft()
 
 //         B
 //        /|
-//       / |
 //      /  |
-//     A---+C
+//    /    |
+//  A------+C
 //sinA = BC/AB 		cosA=AC/AB 		tgA=BC/AC 		ctgA=AC/BC
 //BC=ABsinA			AC=ABcosA 		BC=ACtgA	 	AC=BCctgA
 void Platform::strafe(int16_t angle)
