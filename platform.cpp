@@ -599,7 +599,7 @@ void Platform::runBckLeft()
 
 
 //         B
-//        /|
+//        /|ц
 //      /  |
 //    /    |
 //  A------+C
