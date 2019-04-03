@@ -172,7 +172,7 @@ void Platform::runForward()
 					}
 					case TEMPLATE_2WH_ALONG:
 					{
-						if(heels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
+						if(wheels[i]->getPlacement() == PLACEMENT_SIDE_ALONG_RIGHT)
 						{
 							wheels[i]->runCW();
 						}

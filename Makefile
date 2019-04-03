@@ -13,6 +13,7 @@ arch: main avr-api
 	avr-gcc-ar rcs core.a wheel.o 
 	avr-gcc-ar rcs core.a wheelDynSpd.o
 	avr-gcc-ar rcs core.a platform.o 
+	avr-gcc-ar rcs core.a wheelEmpty.o
 
 link: arch
 	avr-gcc -Wall -Wextra -Os -g -flto -fuse-linker-plugin -ffunction-sections -fdata-sections -Wl,--gc-sections -mmcu=$(MCU) main.o core.a ./avr-api/core.a -o main.elf -L./avr-api -lm
@@ -28,6 +29,7 @@ objcopy: link
 wheel: avr-api
 	avr-g++ $(CFLAGS) wheel.cpp -o wheel.o
 	avr-g++ $(CFLAGS) wheelDynSpd.cpp -o wheelDynSpd.o
+	avr-g++ $(CFLAGS) wheelEmpty.cpp -o wheelEmpty.o
 
 platform: avr-api
 	avr-g++ $(CFLAGS) platform.cpp -o platform.o
