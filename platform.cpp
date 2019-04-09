@@ -448,28 +448,45 @@ void Platform::runFwdRight()
 			this->stop();
 			return;
 		}
-		switch(wheels[i]->getPlacement())
+		if(templ == TEMPLATE_4WH_2ALONG_2PERP)
 		{
-			case PLACEMENT_SIDE_PERP_BACK:
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runCW();
-				break;
+				case PLACEMENT_SIDE_PERP_BACK:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				case PLACEMENT_SIDE_PERP_FRONT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_LEFT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_RIGHT:
+				{
+					wheels[i]->runCW();
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_PERP_FRONT:
+		}
+		else if(this->templ == TEMPLATE_2WH_ALONG)
+		{
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runACW();
-				break;
+				case PLACEMENT_SIDE_ALONG_LEFT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_ALONG_LEFT:
-			{
-				wheels[i]->runACW();
-			}
-			case PLACEMENT_SIDE_ALONG_RIGHT:
-			{
-				wheels[i]->runCW();
-			}
-			default:
-				wheels[i]->stop();
 		}
 	}
 }
@@ -489,69 +506,46 @@ void Platform::runFwdLeft()
 			this->stop();
 			return;
 		}
-		switch(wheels[i]->getPlacement())
+		if(this->templ == TEMPLATE_4WH_2ALONG_2PERP)
 		{
-			case PLACEMENT_SIDE_PERP_BACK:
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runACW();
-				break;
+				case PLACEMENT_SIDE_PERP_BACK:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				case PLACEMENT_SIDE_PERP_FRONT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_LEFT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_RIGHT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_PERP_FRONT:
-			{
-				wheels[i]->runCW();
-				break;
-			}
-			case PLACEMENT_SIDE_ALONG_LEFT:
-			{
-				wheels[i]->runACW();
-			}
-			case PLACEMENT_SIDE_ALONG_RIGHT:
-			{
-				wheels[i]->runCW();
-			}
-			default:
-				wheels[i]->stop();
 		}
-	}
-}
-
-void Platform::runBckRight()
-{
-	if(wheels == 0)
-	{
-		error = ERROR_BAD_ALLOC;
-		return;
-	}
-	for(uint8_t i = 0; i < numOfWheels; i++)
-	{
-		if(wheels[i] == 0)
+		else if(this->templ == TEMPLATE_2WH_ALONG)
 		{
-			error = ERROR_BAD_WHEEL;
-			this->stop();
-			return;
-		}
-		switch(wheels[i]->getPlacement())
-		{
-			case PLACEMENT_SIDE_PERP_BACK:
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runACW();
-				break;
+				case PLACEMENT_SIDE_ALONG_RIGHT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_PERP_FRONT:
-			{
-				wheels[i]->runCW();
-				break;
-			}
-			case PLACEMENT_SIDE_ALONG_LEFT:
-			{
-				wheels[i]->runCW();
-			}
-			case PLACEMENT_SIDE_ALONG_RIGHT:
-			{
-				wheels[i]->runACW();
-			}
-			default:
-				wheels[i]->stop();
 		}
 	}
 }
@@ -571,28 +565,105 @@ void Platform::runBckLeft()
 			this->stop();
 			return;
 		}
-		switch(wheels[i]->getPlacement())
+		if(templ == TEMPLATE_4WH_2ALONG_2PERP)
 		{
-			case PLACEMENT_SIDE_PERP_BACK:
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runCW();
-				break;
+				case PLACEMENT_SIDE_PERP_BACK:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				case PLACEMENT_SIDE_PERP_FRONT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_LEFT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_RIGHT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_PERP_FRONT:
+		}
+		else if(this->templ == TEMPLATE_2WH_ALONG)
+		{
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runACW();
-				break;
+				case PLACEMENT_SIDE_ALONG_LEFT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_ALONG_LEFT:
+		}
+	}
+}
+
+void Platform::runBckRight()
+{
+	if(wheels == 0)
+	{
+		error = ERROR_BAD_ALLOC;
+		return;
+	}
+	for(uint8_t i = 0; i < numOfWheels; i++)
+	{
+		if(wheels[i] == 0)
+		{
+			error = ERROR_BAD_WHEEL;
+			this->stop();
+			return;
+		}
+		if(templ == TEMPLATE_4WH_2ALONG_2PERP)
+		{
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runCW();
+				case PLACEMENT_SIDE_PERP_BACK:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				case PLACEMENT_SIDE_PERP_FRONT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_LEFT:
+				{
+					wheels[i]->runCW();
+					break;
+				}
+				case PLACEMENT_SIDE_ALONG_RIGHT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			case PLACEMENT_SIDE_ALONG_RIGHT:
+		}
+		else if(this->templ == TEMPLATE_2WH_ALONG)
+		{
+			switch(wheels[i]->getPlacement())
 			{
-				wheels[i]->runACW();
+				case PLACEMENT_SIDE_ALONG_RIGHT:
+				{
+					wheels[i]->runACW();
+					break;
+				}
+				default:
+					wheels[i]->stop();
 			}
-			default:
-				wheels[i]->stop();
 		}
 	}
 }

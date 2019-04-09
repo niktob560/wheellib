@@ -3,10 +3,10 @@
 #define TYPE_DYNAMIC_BASIC	3
 #define TYPE_DYNAMIC_OMNY	4
 
-#define STATUS_STOP			0
-#define STATUS_CW			1
-#define STATUS_ACW			2
-#define STATUS_DISABLE 		3
+#define STATUS_STOP			  0
+#define STATUS_CW		     	1
+#define STATUS_ACW			  3
+#define STATUS_DISABLE 		2
 
 #define PLACEMENT_SIDE_ALONG_RIGHT	1
 #define PLACEMENT_SIDE_ALONG_LEFT	2

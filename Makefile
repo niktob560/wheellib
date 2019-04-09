@@ -1,9 +1,9 @@
 MAINFILENAME=main
-MCU=atmega2560
-CFLAGS=-c -O1 -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -flto -fno-devirtualize -fno-use-cxa-atexit -mmcu=$(MCU) -DF_CPU=$(XTAL) -lstdc++ 
+MCU=atmega328p
+CFLAGS=-c -O3 -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -flto -fno-devirtualize -fno-use-cxa-atexit -mmcu=$(MCU) -DF_CPU=$(XTAL) -lstdc++ 
 
 
-all: objcopy
+all: size
 
 main: avr-api wheel platform
 	avr-g++ $(CFLAGS) "$(MAINFILENAME).cpp" -o "$(MAINFILENAME).o"
@@ -46,5 +46,5 @@ clean:
 	rm -rf ./*.o ./*.d ./*.eep ./*.elf ./*.hex  
 	make -C ./avr-api clean
 
-size:
-	avr-size -B $(MAINFILENAME).hex
+size: objcopy
+	avr-size -C $(MAINFILENAME).elf --mcu=$(MCU)
