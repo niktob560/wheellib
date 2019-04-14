@@ -5,3 +5,4 @@
 #include "wheelRegs.h"
 #include "platformRegs.h"
 #include "wheelEmpty.h"
+#include "userWheel.h"

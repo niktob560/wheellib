@@ -89,7 +89,7 @@ uint16_t Wheel::getPinCW()
 
 uint16_t Wheel::getPinACW()
 {
-	return this->pinCW;
+	return this->pinACW;
 }
 
 uint8_t Wheel::getPlacement()
@@ -120,7 +120,7 @@ void Wheel::stop()
 	USART0Println("STOP");
 	this->status = STATUS_STOP;
 	digitalWrite(this->pinCW, HIGH);//enable CW
-	digitalWrite(this->pinACW, HIGH);//enable CW	
+	digitalWrite(this->pinACW, HIGH);//enable CW
 }
 
 void Wheel::disable()

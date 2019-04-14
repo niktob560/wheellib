@@ -5,6 +5,8 @@
 void WheelDynamicSpeed::setSpeed(uint16_t spd)
 {
 	this->spd = spd;
+	if(speedHook != 0x00)
+		speedHook(spd);
 }
 
 uint16_t WheelDynamicSpeed::getSpeed()
@@ -43,3 +45,12 @@ void WheelDynamicSpeed::disable()
 	analogWrite(pinACW, 0);
 }
 
+void WheelDynamicSpeed::installSpeedHook(void (*hook)(uint16_t))
+{
+	speedHook = hook;
+}
+
+void WheelDynamicSpeed::removeSpeedHook()
+{
+	speedHook = 0x00;
+}
