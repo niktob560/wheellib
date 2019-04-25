@@ -688,12 +688,12 @@ void Platform::strafe(int16_t angle)
 	if(abs(angle % 90) < 45)
 	{
 		horSpd  = spd;
-		vertSpd = spd * tan(angle);
+		vertSpd = spd * tan(angle * 3.1415 / 180);
 	}
 	else if(abs(angle % 90) > 45)
 	{
 		vertSpd = spd;
-		horSpd  = spd * tan(angle);
+		horSpd  = spd * tan(angle * 3.1415 / 180);
 	}
 	else
 	{

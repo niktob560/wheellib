@@ -1,7 +1,8 @@
 MAINFILENAME=main
-MCU=atmega2560
-#MCU=atmega328p
-CFLAGS=-c -O3 -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -flto -fno-devirtualize -fno-use-cxa-atexit -mmcu=$(MCU) -DF_CPU=$(XTAL) -lstdc++
+#MCU=atmega2560
+MCU=atmega328p
+OPTIMIZE=-O3
+CFLAGS=-c $(OPTIMIZE) -Wall -Wextra -std=gnu++11 -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD -flto -fno-devirtualize -fno-use-cxa-atexit -mmcu=$(MCU) -DF_CPU=$(XTAL) -lstdc++
 
 
 all: size
@@ -18,7 +19,7 @@ arch: main avr-api
 	avr-gcc-ar rcs core.a userWheel.o
 
 link: arch
-	avr-gcc -Wall -Wextra -Os -g -flto -fuse-linker-plugin -ffunction-sections -fdata-sections -Wl,--gc-sections -mmcu=$(MCU) main.o core.a ./avr-api/core.a -o main.elf -L./avr-api -lm
+	avr-gcc -Wall -Wextra $(OPTIMIZE) -g -flto -fuse-linker-plugin -ffunction-sections -fdata-sections -Wl,--gc-sections -mmcu=$(MCU) main.o core.a ./avr-api/core.a -o main.elf -L./avr-api -lm
 
 objcopy: link
 	avr-objcopy -O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0  "$(MAINFILENAME).elf" "$(MAINFILENAME).eep"
